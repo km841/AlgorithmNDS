@@ -8,6 +8,7 @@ using namespace std;
 
 template<typename ... Args>
 auto build_array(Args&&... args) -> std::array<typename std::common_type<Args...>::type, sizeof...(args)>
+// std::forward<commonType>(arg1), std::forward<commonType>(arg2), std::forward<commonType>(arg3)... 이 목록들을 모아서 array를 만듦
 {
 	using commonType = typename std::common_type<Args...>::type;
 	return { std::forward<commonType>(args)... };
