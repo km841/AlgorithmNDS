@@ -69,6 +69,8 @@ public:
 	const T* end() const { return data + n; }
 
 	
+	// friend 없이 자신을 호출하여도 활용 가능
+	// 같은 클래스이므로 private멤버에 접근 가능
 	friend dynamic_array<T> operator+(const dynamic_array<T>& arr1, dynamic_array<T>& arr2)
 	{
 		dynamic_array<T> result(arr1.size() + arr2.size());
