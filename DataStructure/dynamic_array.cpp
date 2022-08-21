@@ -6,6 +6,7 @@
 using namespace std;
 
 
+// C스타일 배열을 대체하는 래퍼 클래스 dynamic_array
 template<typename T>
 class dynamic_array
 {
@@ -13,6 +14,7 @@ class dynamic_array
 	size_t n;
 
 public:
+
 	dynamic_array(int n)
 	{
 		this->n = n;
@@ -29,7 +31,7 @@ public:
 			data[i] = other[i];
 		}
 	}
-
+	
 	T& operator[](int index)
 	{
 		return data[index];
@@ -47,7 +49,7 @@ public:
 			return data[index];
 		}
 
-		throw "index out of range";
+		throw "index out of range";	// stl vector의 at 연산자와 비슷한 작동방식 차용
 	}
 
 	size_t size() const
