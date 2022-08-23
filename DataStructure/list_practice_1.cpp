@@ -4,6 +4,11 @@
 
 using namespace std;
 
+/*
+std::list는 forward_list에 비해 size(), push_back(), pop_back() 등의 더 많은 함수를 제공하며,
+이들 연산은 O(1) 시간 복잡도로 동작함.
+*/
+
 template<typename T>
 void Print(const T& container)
 {
@@ -31,3 +36,5 @@ int main()
 	Print(list1);
 
 }
+
+
