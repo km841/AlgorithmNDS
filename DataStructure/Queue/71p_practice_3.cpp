@@ -68,5 +68,5 @@ int main()
 	printer.Print(h1.CreateJob(9));
 	printer.Print(h3.CreateJob(1));
 
-	while (printer()) {}
+	while (printer());
 }
