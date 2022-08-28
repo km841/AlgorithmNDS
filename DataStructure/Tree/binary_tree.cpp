@@ -53,13 +53,31 @@ struct bst
     {
         inorder_impl(root);
     }
+    
+    /*
+    노드 삭제 후 빈 공간을 메우기 위한 함수
 
+            12
+          /    \
+        10      18
+       /  \    /  \
+      8   11  15  20
+      \        \
+       9       16
+                \
+                17
+
+    이 트리에서 12를 제거하고 나면 재정리해야 함
+    1. 자식 노드가 없는 경우         : 그냥 삭제하면 된다
+    2. 자식 노드가 하나만 있는 경우  : 노드 삭제 후, 부모 노드의 포인터가 해당 자식 노드를 가리키도록 조정
+    3. 자식 노드가 둘 다 있는 경우   : 노드 삭제 후, 현재 노드를 후속 노드로 대체
+    */
     node* successor(node* start)
     {
-        auto current = start->right;
-        while (current && current->left)
-            current = current->left;
-        return current;
+        auto current = start->right; // 매개변수의 노드 기준 자기보다 큰 값을 가진 노드를 가져온다.
+        while (current && current->left) // 자기보다 큰 노드 중 가장 작은 노드를 찾는다
+            current = current->left; 
+        return current;              // 그 노드를 반환
     }
 
     void deleteValue(int value)
@@ -127,7 +145,7 @@ private:
         if (!start)
             return nullptr;
 
-        if (value < start->data)
+        if (value < start->data) // value : 12, start->data : 12
             start->left = delete_impl(start->left, value);
 
         else if (value > start->data)
@@ -135,24 +153,24 @@ private:
 
         else
         {
-            if (!start->left)
+            if (!start->left) // 찾았는데, 좌측(작은 쪽) 값이 비어 있다면
             {
-                auto tmp = start->right;
+                auto tmp = start->right;  
                 delete start;
-                return tmp;
+                return tmp;   // 삭제 후 삭제한 놈 우측에 있는 값을 반환
             }
 
-            if (!start->right)
+            if (!start->right) // 찾았는데, 우측(큰 쪽) 값이 비어 있다면
             {
                 auto tmp = start->left;
                 delete start;
-                return tmp;
+                return tmp;    // 삭제 후 삭제한 놈 좌측에 있던 값 반환
             }
 
-            auto succNode = successor(start);
-            start->data = succNode->data;
+            auto succNode = successor(start);                         // 삭제될 원소 다음으로 큰 값을 가져옴
+            start->data = succNode->data;                             // 삭제될 노드보다 하나 큰 원소를 덮어쓰기
 
-            start->right = delete_impl(start->right, succNode->data);
+            start->right = delete_impl(start->right, succNode->data); // 값을 가져온 부분을 지우는 코드
         }
 
         return start;
